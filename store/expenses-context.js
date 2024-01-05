@@ -50,14 +50,14 @@ export const ExpensesContext = createContext({
 function expensesReducer(state, action){
     switch (action.type){
         case 'ADD':
-            //const id = new Date().toString() + Math.random().toString();
+            const id = new Date().toString() + Math.random().toString();
             //we don't need id because firebase generates unique id that we can use and have to use to post or delete later
-            return [action.payload,...state];
+            return [action.payload, ...state];
         //here we expect the full object that has the firebase id aswell
         case 'SET':
-            const inverted = action.payload.reverse();
-            return inverted;
-            return action.payload;
+           const inverted = action.payload.reverse();
+           return inverted;
+           //return action.payload;
         case 'UPDATE':
             const updatableExpenseIndex = state.findIndex((expense)=>
                 expense.id === action.payload.id);
@@ -80,9 +80,9 @@ function ExpensesContextProvider({children}){
     function addExpense(expenseData){
         dispatch({type: 'ADD', payload: expenseData});
     }
-    //function setExpenses(expenses){
-    //    dispatch({type: 'SET', payload: expenses});
-    //}
+    function setExpenses(expenses){
+        dispatch({type: 'SET', payload: expenses});
+    }
 
     function deleteExpense(id){
         dispatch({type: 'DELETE', payload: id})

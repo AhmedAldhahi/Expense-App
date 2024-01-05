@@ -4,7 +4,7 @@ import AllExpenses from "./Screens/AllExpenses";
 import ManageExpenses from "./Screens/ManageExpenses";
 import RecentExpenses from "./Screens/RecentExpenses";
 import {StatusBar} from "expo-status-bar";
-import {BottomTabBar, createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {GlobalStyles} from "./constants/styles";
 import {Ionicons} from '@expo/vector-icons'
 import IconButton from "./Components/UI/IconButton";
