@@ -47,3 +47,18 @@ export async function fetchExpenses(){
     }
     return expenses;
 }
+
+export function updateExpense(id, expenseData){
+    return fetch(BACKEND_URL + `/expenses/${id}.json`,{
+        method: "PUT",
+        body: JSON.stringify(expenseData)
+    }).catch(error => "PUT method no work");
+
+
+}
+
+export function deleteExpense(id){
+    return fetch(BACKEND_URL + `/expenses/${id}.json`,{
+        method: "DELETE",
+    });
+}

@@ -50,7 +50,7 @@ export const ExpensesContext = createContext({
 function expensesReducer(state, action){
     switch (action.type){
         case 'ADD':
-            const id = new Date().toString() + Math.random().toString();
+            //const id = new Date().toString() + Math.random().toString();
             //we don't need id because firebase generates unique id that we can use and have to use to post or delete later
             return [action.payload, ...state];
         //here we expect the full object that has the firebase id aswell

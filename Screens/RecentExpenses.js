@@ -4,19 +4,28 @@ import {useContext, useEffect, useState} from "react";
 import {ExpensesContext} from "../store/expenses-context";
 import {getDateMinusDays} from "../util/date";
 import {fetchExpenses} from "../util/http";
+import LoadingOverlay from "../Components/UI/LoadingOverlay";
+import ErrorOverlay from "../Components/UI/ErrorOverlay";
 
 function RecentExpenses(){
+    const [isFetching, setIsFetching] = useState(true);
+    const [error, setError] = useState();
     const expensesCtx = useContext(ExpensesContext);
-
-
-
 
     useEffect(() => {
         async function getExpenses(){
+            setIsFetching(true);
+            try{
+                const expenses = await fetchExpenses();
+                expensesCtx.setExpenses(expenses);
+            } catch (error){
+                setError('Could not fetch expenses!');
+            }
             // fetchExpenses now yields a promise and that means we can wait to that promise to resolve to get the data we need
             //so we add async await
-            const expenses = await fetchExpenses();
-            expensesCtx.setExpenses(expenses);
+
+            setIsFetching(false);
+
 
             //adding async to a function enforce, ensures, makes that function return a promise
             //discourged by the react native team to turn useEffect function to async await
@@ -36,6 +45,21 @@ function RecentExpenses(){
     //we going to add a set function on our context so that we also set expenses when we initially fetch them so when we get
     //expenses from the backend we can set them to out context and then we work on these fetched and set expenses there after
     // in the app
+
+    function errorHandler(){
+        setError(null);
+    }
+
+    if(error && !isFetching){
+        return <ErrorOverlay
+            message={error}
+            onConfirm={errorHandler}
+        />
+    }
+
+    if(isFetching){
+        return <LoadingOverlay />
+    }
 
     const recentExpenses = expensesCtx.expenses.filter((expense)=>{
         const today = new Date();
